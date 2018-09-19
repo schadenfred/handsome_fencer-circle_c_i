@@ -1,4 +1,14 @@
-# desc "Explaining what the task does"
-# task :handsome_fencer_circle_c_i do
-#   # Task goes here
-# end
+desc "obfuscate .circleci variables"
+namespace "handsome_fencer" do
+  namespace "circleci" do
+    task :obfuscate do
+      cipher = Handsomefencer::Environment::Crypto.new
+      cipher.obfuscate
+    end
+
+    task :expose do
+      cipher = Handsomefencer::Environment::Crypto.new
+      cipher.expose
+    end
+  end
+end
