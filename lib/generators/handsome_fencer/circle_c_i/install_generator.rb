@@ -11,8 +11,7 @@ module HandsomeFencer
       end
 
       def copy_deploy_task
-        file = 'lib/tasks/deploy.rake'
-        directory file, file
+        directory 'lib/', 'lib', recursive: true 
       end
 
       def generate_deploy_key

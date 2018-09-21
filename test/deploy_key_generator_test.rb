@@ -1,5 +1,5 @@
 require 'rails/generators'
-require_relative '../lib/generators/handsome_fencer/circle_c_i/deploy_key_generator.rb'
+require 'generators/handsome_fencer/circle_c_i/deploy_key_generator.rb'
 
 class DeployKeyGeneratorTest < Rails::Generators::TestCase
   tests HandsomeFencer::CircleCI::DeployKeyGenerator

@@ -6,7 +6,6 @@ module HandsomeFencer
       source_root File.expand_path('templates', __dir__)
       desc "generate deploy key"
 
-
       def generate_deploy_key
         @cipher = OpenSSL::Cipher.new 'AES-128-CBC'
         @salt = '8 octets'
