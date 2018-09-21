@@ -1,0 +1,3 @@
+
+.circleci/**/*.env
+.circleci/**/*.key

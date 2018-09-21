@@ -15,14 +15,12 @@ module HandsomeFencer
         directory file, file
       end
 
-
       def generate_deploy_key
         @cipher = OpenSSL::Cipher.new 'AES-128-CBC'
         @salt = '8 octets'
         @new_key = @cipher.random_key
 
         create_file ".circleci/deploy.key", Base64.encode64(@new_key)
-
       end
 
       def insert_gitignores

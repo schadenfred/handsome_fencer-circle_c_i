@@ -17,7 +17,7 @@ module HandsomeFencer
       end
 
       def read_deploy_key
-        File.exist?(dkfile) ? File.read(dkfile) : save_deploy_key
+        File.exist?(dkfile) ? File.read(dkfile) : "needs deploy key"
       end
 
       def save_deploy_key
