@@ -10,16 +10,26 @@ module HandsomeFencer
         directory ".circleci", ".circleci", recursive: true
       end
 
+      def copy_deploy_task
+        file = 'lib/tasks/deploy.rake'
+        copy_file file, file
+      end
+
+
       def generate_deploy_key
-        @cipher = Crypto.new
-        @cipher.save_deploy_key
+
+        @cipher = OpenSSL::Cipher.new 'AES-128-CBC'
+        @salt = '8 octets'
+        @new_key = @cipher.random_key
+
+        create_file ".circleci/deploy.key", Base64.encode64(@new_key)
+
       end
 
       def insert_gitignores
-        if File.exist? '.gitignore'
-          append_to_file '.gitignore', "\n\.circle\/\*\*\/\*\.env"
-          append_to_file '.gitignore', "\n.circle/**/*.key"
-        end
+        create_file '.gitignore'
+        append_to_file '.gitignore', "\n.circleci/**/*.env"
+        append_to_file '.gitignore', "\n.circleci/**/*.key"
       end
     end
   end

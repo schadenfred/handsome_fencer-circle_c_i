@@ -1,5 +1,6 @@
 require 'openssl'
 require 'base64'
+require 'byebug'
 
 module HandsomeFencer
   module CircleCI
@@ -22,6 +23,7 @@ module HandsomeFencer
       def save_deploy_key
 
         @new_key = @cipher.random_key
+
         write_to_file Base64.encode64(@new_key), dkfile
         # ignore_sensitive_files
         read_deploy_key
@@ -71,10 +73,14 @@ module HandsomeFencer
       private
 
         def dkfile
-          Rails.root.join('.circleci/deploy.key')
+          file = ".circleci/deploy.key"
         end
 
         def write_to_file(data, filename)
+          dir = filename.split("/").first
+          unless File.exist? dir
+            Dir.mkdir dir
+          end
           open(filename, "w") { |io| io.write data }
         end
 
