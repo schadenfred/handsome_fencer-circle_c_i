@@ -12,12 +12,11 @@ module HandsomeFencer
 
       def copy_deploy_task
         file = 'lib/tasks/deploy.rake'
-        copy_file file, file
+        directory file, file
       end
 
 
       def generate_deploy_key
-
         @cipher = OpenSSL::Cipher.new 'AES-128-CBC'
         @salt = '8 octets'
         @new_key = @cipher.random_key
