@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     handsome_fencer-circle_c_i (0.1.0)
-      rails (~> 5.2.1)
+      rails
 
 GEM
   remote: https://rubygems.org/
@@ -50,6 +50,7 @@ GEM
       tzinfo (~> 1.1)
     arel (9.0.0)
     builder (3.2.3)
+    byebug (10.0.2)
     concurrent-ruby (1.0.5)
     crass (1.0.4)
     erubi (1.7.1)
@@ -57,10 +58,6 @@ GEM
       sorcerer (>= 0.3.7)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
-    guard-compat (1.2.1)
-    guard-minitest (2.4.6)
-      guard-compat (~> 1.2)
-      minitest (>= 3.0)
     i18n (1.1.0)
       concurrent-ruby (~> 1.0)
     loofah (2.2.2)
@@ -130,7 +127,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  guard-minitest
+  byebug
   handsome_fencer-circle_c_i!
   minitest-given
   sqlite3
