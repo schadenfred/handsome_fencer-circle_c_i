@@ -1,5 +1,4 @@
-require 'rails/generators'
-require 'generators/handsome_fencer/circle_c_i/obfuscate_generator.rb'
+require 'test_helper'
 
 class ObfuscateGeneratorTest < Rails::Generators::TestCase
   tests HandsomeFencer::CircleCI::ObfuscateGenerator

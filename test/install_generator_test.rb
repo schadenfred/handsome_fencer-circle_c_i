@@ -1,5 +1,4 @@
-require 'rails/generators'
-require 'generators/handsome_fencer/circle_c_i/install_generator.rb'
+require 'test_helper'
 
 class InstallGeneratorTest < Rails::Generators::TestCase
   tests HandsomeFencer::CircleCI::InstallGenerator

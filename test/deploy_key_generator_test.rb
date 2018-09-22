@@ -1,5 +1,4 @@
-require 'rails/generators'
-require 'generators/handsome_fencer/circle_c_i/deploy_key_generator.rb'
+require 'test_helper'
 
 class DeployKeyGeneratorTest < Rails::Generators::TestCase
   tests HandsomeFencer::CircleCI::DeployKeyGenerator
