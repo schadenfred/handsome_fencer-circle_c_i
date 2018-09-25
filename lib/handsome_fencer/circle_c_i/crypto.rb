@@ -20,7 +20,7 @@ module HandsomeFencer
           raise DeployKeyError, "No deploy key set. Please generate a deploy key using '$ bin/rails generate handsome_fencer:circle_c_i:deploy_key' or set it using '$ export ENV['DEPLOY_KEY'] = some-complicated-key'"
         when ENV['DEPLOY_KEY'].present?
           Base64.decode64(ENV['DEPLOY_KEY'])
-        when File.exist?('.circleci/deploy.key')
+        when File.exist?(dkfile)
           Base64.decode64(File.read(dkfile))
         end
       end
@@ -49,13 +49,14 @@ module HandsomeFencer
       end
 
       def encrypt(file)
+        file = Rails.root.join(file).to_s
         @cipher.encrypt.pkcs5_keyivgen @pass_phrase, @salt
         encrypted = @cipher.update(File.read file) + @cipher.final
         write_to_file(Base64.encode64(encrypted), file + '.enc')
       end
 
       def decrypt(file)
-        encrypted = Base64.decode64 File.read(file)
+        encrypted = Base64.decode64 File.read(file.to_s)
         @cipher.decrypt.pkcs5_keyivgen @pass_phrase, @salt
         decrypted = @cipher.update(encrypted) + @cipher.final
         decrypted_file = file.split('.enc').first
@@ -63,32 +64,28 @@ module HandsomeFencer
       end
 
       def source_files(directory=nil, extension=nil)
-        Dir.glob(Rails.root.join(directory) + "/**/*#{extension}")
+        Dir.glob(directory + "/**/*#{extension}")
       end
 
       def obfuscate(directory=nil, extension=nil)
         extension = extension || '.env'
-        directory = directory || '.env'
+        directory = directory || '.circleci'
         source_files(directory, extension).each { |file| encrypt file }
       end
 
       def expose(directory=nil, extension=nil)
         extension = extension || '.env.enc'
-        directory = directory || '.env'
+        directory = directory || '.circleci'
         source_files(directory, extension).each { |file| decrypt(file) }
       end
 
       private
 
         def dkfile
-          ".circleci/deploy.key"
+          Rails.root.join(".circleci/deploy.key")
         end
 
         def write_to_file(data, filename)
-          dir = filename.split("/").first
-          unless File.exist? dir
-            Dir.mkdir dir
-          end
           File.open(filename, "w") { |io| io.write data }
         end
     end

@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.authors     = ["schadenfred"]
   s.email       = ["fred.schoeneman@gmail.com"]
   s.homepage    = "https://github.com/schadenfred/handsomefencer-environment"
-  s.summary     = "Deploy Handsome Rails apps using Circle"
+  s.summary     = "Handsome deployment of Rails apps using Circle and Docker"
   s.description = "Obfuscate sensitive data in source control, expose it again for circle and then deploy"
   s.license     = "MIT"
 
