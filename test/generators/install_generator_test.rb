@@ -1,4 +1,4 @@
-Dir.chdir('test/dummy')
+# Dir.chdir('test/dummy')
 # require 'test_helper'
 # require 'rails/generators'
 # require 'generators/handsome_fencer'

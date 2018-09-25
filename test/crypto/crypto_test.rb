@@ -1,5 +1,4 @@
 require 'test_helper'
-require 'handsome_fencer/circle_c_i/crypto'
 require 'fileutils'
 
 Dir.chdir('test/dummy')
