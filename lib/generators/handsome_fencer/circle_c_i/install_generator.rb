@@ -11,15 +11,7 @@ module HandsomeFencer
       end
 
       def copy_deploy_task
-        directory 'lib/', 'lib', recursive: true 
-      end
-
-      def generate_deploy_key
-        @cipher = OpenSSL::Cipher.new 'AES-128-CBC'
-        @salt = '8 octets'
-        @new_key = @cipher.random_key
-
-        create_file ".circleci/deploy.key", Base64.encode64(@new_key)
+        directory 'lib/', 'lib', recursive: true
       end
 
       def insert_gitignores

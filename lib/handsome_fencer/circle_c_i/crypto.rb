@@ -82,7 +82,7 @@ module HandsomeFencer
       private
 
         def dkfile
-          Rails.root.join(".circleci/deploy.key")
+          ".circleci/deploy.key"
         end
 
         def write_to_file(data, filename)
