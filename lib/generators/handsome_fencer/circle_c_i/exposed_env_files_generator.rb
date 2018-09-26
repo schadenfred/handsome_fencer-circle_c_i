@@ -2,13 +2,13 @@ require 'handsome_fencer/circle_c_i/crypto'
 module HandsomeFencer
   module CircleCI
 
-    class ObfuscatedEnvFilesGenerator < Rails::Generators::Base
+    class ExposedEnvFilesGenerator < Rails::Generators::Base
       source_root File.expand_path('templates', __dir__)
-      desc "obfuscate .env files inside .circleci directory"
+      desc "expose .env files inside .circleci directory"
 
-      def obfuscate_env_files
+      def expose_env_files
         @cipher = HandsomeFencer::CircleCI::Crypto.new
-        @cipher.obfuscate
+        @cipher.expose
       end
     end
   end
