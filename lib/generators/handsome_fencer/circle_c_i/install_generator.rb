@@ -15,7 +15,7 @@ module HandsomeFencer
       end
 
       def insert_gitignores
-        create_file '.gitignore'
+        create_file '.gitignore' if File.exist? '.gitignore'
         append_to_file '.gitignore', "\n.circleci/**/*.env"
         append_to_file '.gitignore', "\n.circleci/**/*.key"
       end
