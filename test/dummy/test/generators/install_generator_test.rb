@@ -9,6 +9,7 @@ class InstallGeneratorTest < Rails::Generators::TestCase
   test "must be true" do
     run_generator ["handsome_fencer:circle_c_i:install"]
     assert_file ".circleci/circle.env"
+    assert_file "docker-compose.yml"
     assert_file ".gitignore", /\.circleci\/\*\*\/\*.env/
     assert_file ".gitignore", /\.circleci\/\*\*\/\*.key/
     assert_file "lib/tasks/deploy.rake"
