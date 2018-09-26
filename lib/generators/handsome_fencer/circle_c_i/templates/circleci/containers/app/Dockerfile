@@ -1,6 +1,6 @@
 FROM ruby:2.5-alpine
 
-LABEL maintainer="fred.schoeneman@gmail.com"
+LABEL maintainer="your-email-here@gmail.com"
 
 RUN apk add --no-cache --update build-base linux-headers \
     postgresql-dev nodejs tzdata libxml2-dev libxslt-dev
