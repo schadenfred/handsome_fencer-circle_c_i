@@ -17,7 +17,7 @@ module HandsomeFencer
         case
         when ENV['DEPLOY_KEY'].nil? && !File.exist?(dkfile)
           raise DeployKeyError, "No deploy key set. Please generate a deploy key using '$ bin/rails generate handsome_fencer:circle_c_i:deploy_key' or set it using '$ export ENV['DEPLOY_KEY'] = some-complicated-key'"
-        when ENV['DEPLOY_KEY'].present?
+        when !ENV['DEPLOY_KEY'].nil?
           Base64.decode64(ENV['DEPLOY_KEY'])
         when File.exist?(dkfile)
           Base64.decode64(File.read(dkfile))
