@@ -1,9 +1,7 @@
 PATH
   remote: .
   specs:
-    handsome_fencer-circle_c_i (0.1.6)
-      byebug
-      rails
+    handsome_fencer-circle_c_i (0.1.9)
       sshkit
 
 GEM
@@ -135,8 +133,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  byebug
   handsome_fencer-circle_c_i!
   minitest-given
+  rails
   sqlite3
 
 BUNDLED WITH
