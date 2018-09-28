@@ -18,6 +18,11 @@ module HandsomeFencer
         copy_file "docker-compose.yml", "docker-compose.yml"
       end
 
+      def copy_config_databas_yml
+        copy_file "config/database.yml", "config/database.yml"
+      end
+
+
       def insert_gitignores
         create_file '.gitignore' if File.exist? '.gitignore'
         append_to_file '.gitignore', "\n.circleci/**/*.env"
