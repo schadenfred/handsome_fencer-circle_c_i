@@ -8,7 +8,7 @@ describe HandsomeFencer::CircleCI::Crypto do
   subject { HandsomeFencer::CircleCI::Crypto.new }
 
   Given do
-    FileUtils.cp_r '../../lib/generators/handsome_fencer/circle_c_i/templates/.circleci', '.'
+    FileUtils.cp_r '../../lib/generators/handsome_fencer/circle_c_i/templates/circleci', '.'
     open(deploy_key_file, "w") { |io| io.write(passkey) }
   end
 
@@ -136,7 +136,7 @@ describe HandsomeFencer::CircleCI::Crypto do
 
         describe "must expose nested encrypted file" do
 
-          Given(:expected) { "DATABASE_HOST" }
+          Given(:expected) { "export SERVER_USER" }
 
           Then { assert File.exist? nested_env_file }
           And  { File.read(nested_env_file).must_match expected  }
@@ -145,7 +145,7 @@ describe HandsomeFencer::CircleCI::Crypto do
     end
   end
 
-  Minitest.after_run do
-    FileUtils.remove_dir('.circleci') if Dir.exist?('.circleci')
-  end
+  # Minitest.after_run do
+  #   FileUtils.remove_dir('.circleci') if Dir.exist?('.circleci')
+  # end
 end

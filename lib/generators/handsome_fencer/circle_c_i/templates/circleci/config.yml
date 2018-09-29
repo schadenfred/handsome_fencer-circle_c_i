@@ -9,8 +9,8 @@ jobs:
     machine: true
     steps:
       - checkout
-      - run: gem install handsomefencer-environment
-      - run: ruby expose_env.rb
+      - run: gem install handsome_fencer-circle_c_i
+      - run: ruby .circleci/expose_env.rb
       - run: docker-compose build dev_app database
       - run: docker-compose run dev_app bin/rails db:create db:migrate test
 

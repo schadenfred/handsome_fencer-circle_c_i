@@ -7,7 +7,7 @@ module HandsomeFencer
       desc "Sets up some necessary files for continuous deployments using docker and CircleCI"
 
       def copy_circle_templates
-        directory "circleci", ".circleci", recursive: true
+        directory "circleci", "./.circleci", recursive: true
       end
 
       def copy_deploy_task
