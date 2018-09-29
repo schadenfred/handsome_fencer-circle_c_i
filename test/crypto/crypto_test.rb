@@ -8,7 +8,8 @@ describe HandsomeFencer::CircleCI::Crypto do
   subject { HandsomeFencer::CircleCI::Crypto.new }
 
   Given do
-    FileUtils.cp_r '../../lib/generators/handsome_fencer/circle_c_i/templates/circleci', '.'
+    # FileUtils.cp_r '../../lib/generators/handsome_fencer/circle_c_i/templates/circleci', '.'
+    # FileUtils.mv 'circleci', '.circleci'
     open(deploy_key_file, "w") { |io| io.write(passkey) }
   end
 
