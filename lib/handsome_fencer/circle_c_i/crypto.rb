@@ -1,6 +1,6 @@
 require 'openssl'
 require 'base64'
-
+require 'byebug'
 module HandsomeFencer
   module CircleCI
     class Crypto
@@ -8,19 +8,21 @@ module HandsomeFencer
       DeployKeyError = Class.new(StandardError)
 
       def initialize(options={})
+
         @cipher = OpenSSL::Cipher.new 'AES-128-CBC'
         @salt = '8 octets'
+        @dkfile = ".circleci/" + options[:dkfile] + ".key"
         @pass_phrase = get_deploy_key
       end
 
       def get_deploy_key
         case
-        when ENV['DEPLOY_KEY'].nil? && !File.exist?(dkfile)
+        when ENV['DEPLOY_KEY'].nil? && !File.exist?(@dkfile)
           raise DeployKeyError, "No deploy key set. Please generate a deploy key using '$ bin/rails generate handsome_fencer:circle_c_i:deploy_key' or set it using '$ export ENV['DEPLOY_KEY'] = some-complicated-key'"
+        when File.exist?(@dkfile)
+          Base64.decode64(File.read(@dkfile))
         when !ENV['DEPLOY_KEY'].nil?
           Base64.decode64(ENV['DEPLOY_KEY'])
-        when File.exist?(dkfile)
-          Base64.decode64(File.read(dkfile))
         end
       end
 
@@ -55,6 +57,7 @@ module HandsomeFencer
       end
 
       def decrypt(file)
+
         encrypted = Base64.decode64 File.read(file.to_s)
         @cipher.decrypt.pkcs5_keyivgen @pass_phrase, @salt
         decrypted = @cipher.update(encrypted) + @cipher.final
@@ -73,6 +76,9 @@ module HandsomeFencer
       end
 
       def expose(directory=nil, extension=nil)
+        # if @dkfile == '.circleci/production.key'
+        #   # byebug
+        # end
         extension = extension || '.env.enc'
         directory = directory || '.circleci'
         source_files(directory, extension).each { |file| decrypt(file) }

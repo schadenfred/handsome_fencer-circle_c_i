@@ -3,12 +3,15 @@ module HandsomeFencer
   module CircleCI
 
     class ExposedEnvFilesGenerator < Rails::Generators::Base
-      source_root File.expand_path('templates', __dir__)
       desc "expose .env files inside .circleci directory"
 
+      source_root File.expand_path('templates', __dir__)
+      class_option :environment, type: :string, default: 'deploy'
+
       def expose_env_files
-        @cipher = HandsomeFencer::CircleCI::Crypto.new
-        @cipher.expose
+        environment = options[:environment]
+        @cipher = HandsomeFencer::CircleCI::Crypto.new(dkfile: environment)
+        @cipher.expose('.circleci', "#{environment}.env.enc")
       end
     end
   end

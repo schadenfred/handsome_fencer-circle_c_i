@@ -14,7 +14,7 @@ module HandsomeFencer
         environment = options[:environment]
 
         @cipher = HandsomeFencer::CircleCI::Crypto.new(dkfile: environment)
-        @cipher.obfuscate
+        @cipher.obfuscate('.circleci', "#{environment}.env")
       end
     end
   end
