@@ -7,7 +7,7 @@ module HandsomeFencer
 
       DeployKeyError = Class.new(StandardError)
 
-      def initialize
+      def initialize(options={})
         @cipher = OpenSSL::Cipher.new 'AES-128-CBC'
         @salt = '8 octets'
         @pass_phrase = get_deploy_key
