@@ -1,6 +1,5 @@
 require 'openssl'
 require 'base64'
-require 'byebug'
 
 module HandsomeFencer
   module CircleCI
