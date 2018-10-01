@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.version     = HandsomeFencer::CircleCI::VERSION
   s.authors     = ["schadenfred"]
   s.email       = ["fred.schoeneman@gmail.com"]
-  s.homepage    = "https://github.com/schadenfred/handsomefencer-environment"
+  s.homepage    = "https://github.com/schadenfred/handsome_fencer-circle_c_i"
   s.summary     = "Handsome deployment of Rails apps using Circle and Docker"
   s.description = "Obfuscate sensitive data in source control, expose it again for circle and then deploy"
   s.license     = "MIT"
