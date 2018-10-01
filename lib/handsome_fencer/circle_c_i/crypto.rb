@@ -50,7 +50,7 @@ module HandsomeFencer
       end
 
       def encrypt(file)
-        file = Rails.root.join(file).to_s
+        file = file
         @cipher.encrypt.pkcs5_keyivgen @pass_phrase, @salt
         encrypted = @cipher.update(File.read file) + @cipher.final
         write_to_file(Base64.encode64(encrypted), file + '.enc')
