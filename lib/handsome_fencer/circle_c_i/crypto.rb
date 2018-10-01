@@ -1,5 +1,6 @@
 require 'openssl'
 require 'base64'
+require 'byebug'
 
 module HandsomeFencer
   module CircleCI
@@ -10,7 +11,7 @@ module HandsomeFencer
       def initialize(options={})
         @cipher = OpenSSL::Cipher.new 'AES-128-CBC'
         @salt = '8 octets'
-        @dkfile = options[:dkfile] ? options[:dkfile] : dkfile
+        @dkfile = options[:dkfile] ? ('.circleci/' + options[:dkfile] + '.key') : dkfile
         @pass_phrase = get_deploy_key
       end
 
@@ -56,8 +57,7 @@ module HandsomeFencer
       end
 
       def decrypt(file)
-
-        encrypted = Base64.decode64 File.read(Rails.root(file.to_s))
+        encrypted = Base64.decode64 File.read(file)
         @cipher.decrypt.pkcs5_keyivgen @pass_phrase, @salt
         decrypted = @cipher.update(encrypted) + @cipher.final
         decrypted_file = file.split('.enc').first
@@ -83,7 +83,7 @@ module HandsomeFencer
       private
 
         def dkfile
-          Rails.root.join(".circleci/deploy.key")
+          ".circleci/deploy.key"
         end
 
         def write_to_file(data, filename)
