@@ -1,7 +1,17 @@
 require_relative 'boot'
 
-require 'rails/all'
+# active_record is what we're not going to use it, so comment it "just in case"
+# require "active_record/railtie"
 
+# This is not loaded in rails/all but inside active_record so add it if
+# you want your models work as expected
+# require "active_model/railtie"
+# And now the rest
+require "action_controller/railtie"
+require "action_mailer/railtie"
+require "action_view/railtie"
+require "sprockets/railtie"
+require "rails/test_unit/railtie"
 Bundler.require(*Rails.groups)
 require "handsome_fencer/circle_c_i"
 
