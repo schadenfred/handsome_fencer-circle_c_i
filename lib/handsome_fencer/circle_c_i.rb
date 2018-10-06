@@ -1,4 +1,3 @@
-require "handsome_fencer/circle_c_i/railtie"
 require "handsome_fencer/circle_c_i/crypto"
 
 module HandsomeFencer

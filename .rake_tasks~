@@ -1,0 +1,10 @@
+build
+clean
+clobber
+clobber_rdoc
+install
+install:local
+rdoc
+release[remote]
+rerdoc
+test

@@ -1,7 +1,11 @@
-# require 'test_helper'
-#
-# class HandsomeFencer::CircleCI::Test < ActiveSupport::TestCase
-#   test "truth" do
-#     assert_kind_of Module, HandsomeFencer::CircleCI
-#   end
-# end
+require "test_helper"
+
+class HandsomeFencer::CircleCITest < Minitest::Test
+  def test_that_it_has_a_version_number
+    refute_nil ::HandsomeFencer::CircleCI::VERSION
+  end
+
+  def test_it_does_something_useful
+    assert false
+  end
+end

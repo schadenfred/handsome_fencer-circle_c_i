@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    handsome_fencer-circle_c_i (0.1.11)
+    handsome_fencer-circle_c_i (0.1.12)
       sshkit
 
 GEM
