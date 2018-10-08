@@ -22,8 +22,6 @@ Gem::Specification.new do |s|
   s.add_dependency "thor"
   s.add_dependency "rake"
 
-  # s.add_development_dependency "rails"
-  s.add_development_dependency "sqlite3"
   s.add_development_dependency "minitest-given"
   s.add_development_dependency "byebug"
 
