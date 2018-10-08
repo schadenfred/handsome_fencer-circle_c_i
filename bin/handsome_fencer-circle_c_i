@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
-
 require 'handsome_fencer/circle_c_i'
 
 
-Socialinvestigator::HammerOfTheGods.start( ARGV )
+HandsomeFencer::CircleCI::HammerOfTheGods.start( ARGV )
