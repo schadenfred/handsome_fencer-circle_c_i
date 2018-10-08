@@ -13,6 +13,8 @@ Gem::Specification.new do |s|
   s.summary     = "Handsome deployment of Rails apps using Circle and Docker"
   s.description = "Obfuscate sensitive data in source control, expose it again for circle and then deploy"
   s.license     = "MIT"
+  s.executables << 'handsome_fencer-circle_c_i'
+
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
