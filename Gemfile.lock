@@ -2,7 +2,9 @@ PATH
   remote: .
   specs:
     handsome_fencer-circle_c_i (0.1.12)
+      rake
       sshkit
+      thor
 
 GEM
   remote: https://rubygems.org/
