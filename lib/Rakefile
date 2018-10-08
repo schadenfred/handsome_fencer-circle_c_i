@@ -1,5 +1,5 @@
 # lib/Rakefile
 require 'handsome_fencer-circle_c_i'
-import "./lib/handsome_fencer-circle_c_i/tasks/generate_key.rake"
+import "./lib/handsome_fencer/circle_c_i/tasks/generate_key.rake"
 path = File.expand_path(__dir__)
 Dir.glob("#{path}/tasks/**/*.rake").each { |f| import f }

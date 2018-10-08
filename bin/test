@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#!/usr/bin/env ruby -U
 $: << File.expand_path("../test", __dir__)
 
 require "bundler/setup"

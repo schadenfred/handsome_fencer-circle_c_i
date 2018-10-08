@@ -25,3 +25,6 @@ Rake::TestTask.new(:test) do |t|
 end
 
 task default: :test
+
+import "lib/handsome_fencer/circle_c_i/tasks/generate_key.rake"
+import "lib/handsome_fencer/circle_c_i/tasks/install.rake"
