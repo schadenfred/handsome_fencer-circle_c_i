@@ -31,10 +31,10 @@ services:
       - .circleci/containers/database/development.env
 
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - database-data:/var/lib/postgresql/data
 
 volumes:
-  db-data:
+  database-data:
   gem_cache:
 
 secrets:
