@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    handsome_fencer-circle_c_i (0.1.16)
+    handsome_fencer-circle_c_i (0.1.17)
       rake
       sshkit
       thor
@@ -21,7 +21,6 @@ GEM
     net-ssh (5.0.2)
     rake (12.3.1)
     sorcerer (1.0.2)
-    sqlite3 (1.3.13)
     sshkit (1.17.0)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
@@ -34,7 +33,6 @@ DEPENDENCIES
   byebug
   handsome_fencer-circle_c_i!
   minitest-given
-  sqlite3
 
 BUNDLED WITH
    1.16.3

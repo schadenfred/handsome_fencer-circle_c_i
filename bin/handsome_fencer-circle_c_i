@@ -3,4 +3,4 @@
 require 'handsome_fencer/circle_c_i'
 
 
-HandsomeFencer::CircleCI::HammerOfTheGods.start( ARGV )
+HandsomeFencer::CircleCI::CLI.start( ARGV )

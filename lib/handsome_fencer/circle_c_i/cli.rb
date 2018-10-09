@@ -1,9 +1,12 @@
 require 'thor'
-require 'handsome_fencer/circle_c_i/cli/hn'
+require 'handsome_fencer/circle_c_i/cli/install'
 
 module HandsomeFencer
   module CircleCI
-    class HammerOfTheGods < Thor
+    class CLI < Thor
+
+      desc "install", "This will generate a .circleci directory in your project root, along with a set of files for continuous deployments using docker and CircleCI"
+
       desc "hello NAME", "This will greet you"
       long_desc <<-HELLO_WORLD
 
@@ -24,8 +27,11 @@ module HandsomeFencer
         puts greeting
       end
 
-      desc "hn COMMANDS", "Hacker News Control Module"
-      subcommand "hn", HandsomeFencer::CircleCI::CLI::Hn
+      # desc "hn COMMANDS", "Hacker News Control Module"
+      # subcommand "hn", HandsomeFencer::CircleCI::CLI::Hn
+      #
+      # desc "install COMMANDS", "Hacker News Control Module"
+      # subcommand "hn", HandsomeFencer::CircleCI::CLI::Hn
     end
   end
 end
