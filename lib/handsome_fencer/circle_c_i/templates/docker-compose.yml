@@ -28,7 +28,7 @@ services:
   database:
     image: postgres
     env_file:
-      - .env/development/database.env
+      - .circleci/containers/database/development.env
 
     volumes:
       - db-data:/var/lib/postgresql/data
