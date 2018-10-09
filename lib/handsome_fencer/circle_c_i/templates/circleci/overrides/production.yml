@@ -1,0 +1,46 @@
+version: '3.1'
+
+services:
+
+  app:
+    image: rennmappe/handsomefencer_app:$DEPLOY_TAG
+    secrets:
+      - host_ssh_key
+    command: [ "bundle", "exec", "puma", "-C", "config/puma.rb" ]
+
+    depends_on:
+      - database
+
+    volumes:
+      - app-data:/handsomefencer
+    environment:
+      - RAILS_MASTER_KEY
+    env_file:
+      - .env/development/database.env
+      - .env/development/app.env
+    expose:
+      - '3000'
+
+  database:
+    image: postgres
+    env_file:
+      - .env/development/database.env
+
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  web:
+    image: rennmappe/handsomefencer_web:$DEPLOY_TAG
+    command: [ "nginx", "-g", "daemon off;" ]
+    depends_on:
+      - app
+    ports:
+      - "80:80"
+
+volumes:
+  db-data:
+  app-data:
+
+secrets:
+  host_ssh_key:
+    file: ~/.ssh/id_rsa

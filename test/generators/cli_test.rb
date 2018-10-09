@@ -11,9 +11,15 @@ describe "HandsomeFencer::CircleCI::CLI" do
   describe "install" do
 
     Then { assert File.exist? '.circleci/circle.env' }
-    And  { assert File.exist? '.circleci/config.yml' }
-    And  { assert File.exist? 'config/database.yml' }
-    And  { assert File.exist? 'docker-compose.yml' }
+    And { assert File.exist? '.circleci/containers/app/Dockerfile' }
+    And { assert File.exist? '.circleci/containers/app/development.env' }
+    And { assert File.exist? '.circleci/containers/database/development.env' }
+    And { assert File.exist? '.circleci/overrides/production.yml' }
+    And { assert File.exist? '.circleci/config.yml' }
+    And { assert File.exist? 'config/database.yml' }
+    And { assert File.exist? 'docker-compose.yml' }
+    And { assert File.exist? 'lib/tasks/deploy.rake' }
+    And { assert File.exist? 'Gemfile' }
   end
 
   describe "generate_key" do
@@ -73,11 +79,11 @@ describe "HandsomeFencer::CircleCI::CLI" do
 
     describe "staging" do
 
-      Given { refute File.exist? '.circleci/containers/database/staging.env.enc' }
+      Given { refute File.exist? '.circleci/containers/app/staging.env.enc' }
       Given { subject.generate_key('staging') }
       Given { subject.obfuscate('staging') }
 
-      Then  { assert File.exist? '.circleci/containers/database/staging.env.enc' }
+      Then { assert File.exist? '.circleci/containers/database/staging.env.enc' }
 
       describe "expose" do
 
