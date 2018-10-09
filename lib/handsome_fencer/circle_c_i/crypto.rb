@@ -11,17 +11,20 @@ module HandsomeFencer
         @cipher = OpenSSL::Cipher.new 'AES-128-CBC'
         @salt = '8 octets'
         @dkfile = '.circleci/keys/' + options[:environment] + '.key'
+        @deploy_key = (options[:environment] + '_key').upcase
         @pass_phrase = get_deploy_key
       end
 
       def get_deploy_key
         case
-        when ENV['DEPLOY_KEY'].nil? && !File.exist?(@dkfile)
-          raise DeployKeyError, "No deploy key set. Please generate a deploy key using '$ bin/rails generate handsome_fencer:circle_c_i:deploy_key' or set it using '$ export ENV['DEPLOY_KEY'] = some-complicated-key'"
+        when ENV[@deploy_key].nil? && !File.exist?(@dkfile)
+          raise DeployKeyError, "No #{@deploy_key} set. Please generate using '$ handsome_fencer-circle_c_i generate_key :circle' or '$ export
+            ENV['CIRCLE_KEY'] = some-complicated-key'"
         when File.exist?(@dkfile)
           Base64.decode64(File.read(@dkfile))
-        when !ENV['DEPLOY_KEY'].nil?
-          Base64.decode64(ENV['DEPLOY_KEY'])
+        when !ENV[@deploy_key].nil?
+
+          Base64.decode64(ENV[@deploy_key])
         end
       end
 
@@ -68,7 +71,7 @@ module HandsomeFencer
       end
 
       def obfuscate(directory=nil, extension=nil)
-        
+
         extension = extension || '.env'
         directory = directory || '.circleci'
         source_files(directory, extension).each { |file| encrypt file }
