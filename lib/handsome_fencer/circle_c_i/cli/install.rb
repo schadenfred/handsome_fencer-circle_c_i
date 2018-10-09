@@ -6,14 +6,14 @@ module HandsomeFencer
 
       def install
         directory "circleci", "./.circleci", recursive: true
-        directory 'lib/', 'lib', recursive: true
+        directory "lib/", "lib", recursive: true
         copy_file "docker-compose.yml", "docker-compose.yml"
-        copy_file "Gemfile", "Gemfile"
-        copy_file "Gemfile.lock", "Gemfile.lock"
+        copy_file "Gemfile", "Gemfile" unless File.exist? "Gemfile"
+        copy_file "Gemfile.lock", "Gemfile.lock" unless File.exist? "Gemfile.lock"
         copy_file "config/database.yml", "config/database.yml"
-        create_file '.gitignore' unless File.exist? '.gitignore'
-        append_to_file '.gitignore', "\n.circleci/**/*.env"
-        append_to_file '.gitignore', "\n.circleci/**/*.key"
+        copy_file "gitignore", ".gitignore" unless File.exist? ".gitignore"
+        append_to_file ".gitignore", "\n.circleci/**/*.env"
+        append_to_file ".gitignore", "\n.circleci/**/*.key"
       end
     end
   end

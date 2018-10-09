@@ -2,10 +2,9 @@ require 'thor_test_helper'
 
 describe "HandsomeFencer::CircleCI::CLI" do
 
-  Given { prepare_destination }
-
   Given(:subject) { HandsomeFencer::CircleCI::CLI.new }
 
+  Given { prepare_destination }
   Given { subject.install }
 
   describe "install" do
@@ -20,6 +19,7 @@ describe "HandsomeFencer::CircleCI::CLI" do
     And { assert File.exist? 'docker-compose.yml' }
     And { assert File.exist? 'lib/tasks/deploy.rake' }
     And { assert File.exist? 'Gemfile' }
+    And { assert File.exist? '.gitignore' }
   end
 
   describe "generate_key" do
