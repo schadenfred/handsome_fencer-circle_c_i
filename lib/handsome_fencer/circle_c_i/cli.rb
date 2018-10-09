@@ -1,37 +1,20 @@
 require 'thor'
 require 'handsome_fencer/circle_c_i/cli/install'
+require 'handsome_fencer/circle_c_i/cli/generate_key'
+require 'handsome_fencer/circle_c_i/cli/generate_key'
+require 'handsome_fencer/circle_c_i/cli/obfuscate'
+require 'handsome_fencer/circle_c_i/cli/expose'
+require 'byebug'
 
 module HandsomeFencer
   module CircleCI
     class CLI < Thor
 
-      desc "install", "This will generate a .circleci directory in your project root, along with a set of files for continuous deployments using docker and CircleCI"
+      include Thor::Actions
 
-      desc "hello NAME", "This will greet you"
-      long_desc <<-HELLO_WORLD
-
-      `hello NAME` will print out a message to the person of your choosing.
-
-      Brian Kernighan actually wrote the first "Hello, World!" program
-      as part of the documentation for the BCPL programming language
-      developed by Martin Richards. BCPL was used while C was being
-      developed at Bell Labs a few years before the publication of
-      Kernighan and Ritchie's C book in 1972.
-
-      http://stackoverflow.com/a/12785204
-      HELLO_WORLD
-      option :upcase
-      def hello( name )
-        greeting = "Hello, #{name}"
-        greeting.upcase! if options[:upcase]
-        puts greeting
+      def self.source_root
+        File.dirname(__FILE__) + '/templates/'
       end
-
-      # desc "hn COMMANDS", "Hacker News Control Module"
-      # subcommand "hn", HandsomeFencer::CircleCI::CLI::Hn
-      #
-      # desc "install COMMANDS", "Hacker News Control Module"
-      # subcommand "hn", HandsomeFencer::CircleCI::CLI::Hn
     end
   end
 end

@@ -1,5 +1,6 @@
 require 'thor_test_helper'
 require 'handsome_fencer/circle_c_i/cli/install'
+require 'handsome_fencer/circle_c_i/cli/generate_key'
 
 describe "HandsomeFencer::CircleCI::CLI" do
 
