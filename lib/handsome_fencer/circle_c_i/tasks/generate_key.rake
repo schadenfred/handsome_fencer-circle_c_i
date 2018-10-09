@@ -1,8 +1,5 @@
 require 'handsome_fencer/circle_c_i/crypto'
 require 'thor'
-require 'optparse'
-
-require 'byebug'
 
 namespace :handsome_fencer do
 

@@ -1,5 +1,3 @@
-require 'byebug'
-
 module HandsomeFencer
   module CircleCI
     class CLI < Thor

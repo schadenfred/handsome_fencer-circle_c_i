@@ -1,4 +1,3 @@
-require 'byebug'
 
 module HandsomeFencer
   module CircleCI

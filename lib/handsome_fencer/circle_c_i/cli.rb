@@ -4,7 +4,6 @@ require 'handsome_fencer/circle_c_i/cli/generate_key'
 require 'handsome_fencer/circle_c_i/cli/generate_key'
 require 'handsome_fencer/circle_c_i/cli/obfuscate'
 require 'handsome_fencer/circle_c_i/cli/expose'
-require 'byebug'
 
 module HandsomeFencer
   module CircleCI
