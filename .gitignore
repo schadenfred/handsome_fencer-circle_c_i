@@ -1,6 +1,7 @@
 .bundle/
 log/*.log
 pkg/
+test/tmp
 test/dummy/db/*.sqlite3
 test/dummy/db/*.sqlite3-journal
 test/dummy/log/*.log
@@ -9,3 +10,6 @@ test/dummy/yarn-error.log
 test/dummy/storage/
 test/dummy/test/generators/tmp/
 .byebug_history
+
+.circleci/**/*.env
+.circleci/**/*.key

@@ -1,12 +1,10 @@
 require 'test_helper'
 
 
-Dir.chdir('test/tmp')
-
-def destination_root
-  File.join(Dir.pwd, 'test/tmp')
-end
-
 def prepare_destination
-#   FileUtils.rm_rf('.')
+
+  if  Dir.pwd.split('/').last == "handsome_fencer-circle_c_i"
+    Dir.chdir('test/tmp')
+  end
+  FileUtils.rm_rf('.')
 end

@@ -10,7 +10,7 @@ module HandsomeFencer
       def initialize(options={})
         @cipher = OpenSSL::Cipher.new 'AES-128-CBC'
         @salt = '8 octets'
-        @dkfile = options[:dkfile] ? ('.circleci/' + options[:dkfile] + '.key') : dkfile
+        @dkfile = '.circleci/keys/' + options[:environment] + '.key'
         @pass_phrase = get_deploy_key
       end
 
@@ -68,6 +68,7 @@ module HandsomeFencer
       end
 
       def obfuscate(directory=nil, extension=nil)
+        
         extension = extension || '.env'
         directory = directory || '.circleci'
         source_files(directory, extension).each { |file| encrypt file }

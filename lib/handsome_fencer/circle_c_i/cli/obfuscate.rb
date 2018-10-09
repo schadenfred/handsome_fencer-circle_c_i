@@ -9,7 +9,7 @@ module HandsomeFencer
       def obfuscate(*args)
 
         environment = args.first
-        @cipher = HandsomeFencer::CircleCI::Crypto.new(dkfile: environment)
+        @cipher = HandsomeFencer::CircleCI::Crypto.new(environment: environment)
         @cipher.obfuscate('.circleci', "#{environment}.env")
       end
     end

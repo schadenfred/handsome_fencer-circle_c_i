@@ -7,7 +7,7 @@ module HandsomeFencer
       desc "generate_key", "(Re)generate a key for each environment"
 
       def generate_key(*args)
-        environment = args.first
+        environment = args.first ? args.first : "deploy"
 
         @cipher = OpenSSL::Cipher.new 'AES-128-CBC'
         @salt = '8 octets'
