@@ -3,15 +3,6 @@ require 'handsome_fencer/circle_c_i/cli/install'
 
 describe "HandsomeFencer::CircleCI::CLI" do
 
-  # Dir.chdir('tmp')
-  #
-  # def destination_root
-  #   File.join(Dir.pwd, 'test/tmp')
-  # end
-  #
-  # def prepare_destination
-  #   FileUtils.rm_rf('.')
-  # end
 
   Given { prepare_destination }
   Given(:subject) { HandsomeFencer::CircleCI::CLI.new }
