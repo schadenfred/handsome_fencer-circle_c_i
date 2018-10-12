@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    handsome_fencer-circle_c_i (0.1.25)
+    handsome_fencer-circle_c_i (0.1.26)
       rake
       sshkit
       thor
