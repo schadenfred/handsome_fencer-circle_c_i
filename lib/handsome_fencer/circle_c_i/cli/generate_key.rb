@@ -11,7 +11,7 @@ module HandsomeFencer
         @salt = '8 octets'
         @new_key = @cipher.random_key
 
-        create_file ".circleci/keys/#{environment}.key", Base64.encode64(@new_key)
+        create_file "docker/keys/#{environment}.key", Base64.encode64(@new_key)
       end
     end
   end

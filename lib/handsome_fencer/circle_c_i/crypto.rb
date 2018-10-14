@@ -10,7 +10,7 @@ module HandsomeFencer
       def initialize(options={})
         @cipher = OpenSSL::Cipher.new 'AES-128-CBC'
         @salt = '8 octets'
-        @dkfile = '.circleci/keys/' + options[:environment] + '.key'
+        @dkfile = 'docker/keys/' + options[:environment] + '.key'
         @deploy_key = (options[:environment] + '_key').upcase
         @pass_phrase = get_deploy_key
       end
@@ -73,20 +73,20 @@ module HandsomeFencer
       def obfuscate(directory=nil, extension=nil)
 
         extension = extension || '.env'
-        directory = directory || '.circleci'
+        directory = directory || 'docker'
         source_files(directory, extension).each { |file| encrypt file }
       end
 
       def expose(directory=nil, extension=nil)
         extension = extension || '.env.enc'
-        directory = directory || '.circleci'
+        directory = directory || 'docker'
         source_files(directory, extension).each { |file| decrypt(file) }
       end
 
       private
 
         def dkfile
-          ".circleci/deploy.key"
+          "docker/keys/circleci.key"
         end
 
         def write_to_file(data, filename)

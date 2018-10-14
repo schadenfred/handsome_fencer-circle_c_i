@@ -7,7 +7,7 @@ module HandsomeFencer
       def expose(*args)
         environment = args.first
         @cipher = HandsomeFencer::CircleCI::Crypto.new(environment: environment)
-        @cipher.expose('.circleci', "#{environment}.env.enc")
+        @cipher.expose('docker', "#{environment}.env.enc")
       end
     end
   end

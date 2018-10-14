@@ -5,93 +5,108 @@ describe "HandsomeFencer::CircleCI::CLI" do
   Given(:subject) { HandsomeFencer::CircleCI::CLI.new }
 
   Given { prepare_destination }
-  Given { subject.install }
+  Given { subject.dockerize }
 
-  describe "install" do
+  describe "dockerize" do
 
-    Then { assert File.exist? '.circleci/circle.env' }
-    And { assert File.exist? '.circleci/containers/app/Dockerfile' }
-    And { assert File.exist? '.circleci/containers/app/development.env' }
-    And { assert File.exist? '.circleci/containers/database/development.env' }
-    And { assert File.exist? '.circleci/overrides/production.yml' }
-    And { assert File.exist? '.circleci/config.yml' }
-    And { assert File.exist? 'config/database.yml' }
-    And { assert File.exist? 'docker-compose.yml' }
-    And { assert File.exist? 'lib/tasks/deploy.rake' }
-    And { assert File.exist? 'Gemfile' }
-    And { assert File.exist? '.gitignore' }
+    Then { assert_file '.circleci' }
+    And { assert_file '.circleci/config.yml' }
+    And { assert_file 'docker' }
+    And { assert_file 'docker/containers' }
+    And { assert_file 'docker/containers/app' }
+    And { assert_file 'docker/containers/app/Dockerfile' }
+    And { assert_file 'docker/containers/app/development.env' }
+    And { assert_file 'docker/containers/app/production.env' }
+    And { assert_file 'docker/containers/database' }
+    And { assert_file 'docker/containers/database/development.env' }
+    And { assert_file 'docker/containers/database/production.env' }
+    And { assert_file 'docker/containers/web' }
+    And { assert_file 'docker/containers/web/app.conf' }
+    And { assert_file 'docker/containers/web/Dockerfile' }
+    And { assert_file 'docker/containers/web/production.env' }
+    And { assert_file 'docker/env_files' }
+    And { assert_file 'docker/env_files/circleci.env' }
+    And { assert_file 'docker/keys' }
+    And { assert_file 'docker/overrides' }
+    And { assert_file 'docker/overrides/production.docker-compose.yml' }
+
+    And { refute File.exist? 'config/database.yml' }
+    And { refute File.exist? 'Gemfile' }
+    And { refute File.exist? 'Gemfile.lock' }
+    And { refute Fiel.exist? 'lib/tasks/deploy.rake' }
   end
 
   describe "generate_key" do
 
-    Given { subject.generate_key('circle') }
+    Given { subject.generate_key('circleci') }
 
-    Then { assert File.exist? '.circleci/keys/circle.key' }
+    Then { assert_file 'docker/keys/circleci.key' }
   end
 
   describe "obfuscate" do
 
-    Then { refute File.exist? '.circleci/keys/circle.key' }
+    Then { refute File.exist? 'docker/keys/circleci.key' }
 
     describe "with ENV['CIRCLE_KEY'] set" do
 
       Given(:passkey) { "HidqS1dbAZXFDGiWGGk3Zw==" }
-      Given { ENV['CIRCLE_KEY'] = passkey }
-      Given { subject.obfuscate('circle') }
+      Given { ENV['CIRCLECI_KEY'] = passkey }
+      Given { subject.obfuscate('circleci') }
 
-      Then { assert File.exist? '.circleci/circle.env.enc' }
+      Then { assert_file 'docker/env_files/circleci.env.enc' }
     end
 
     describe "ENV['CIRCLE_KEY'] = nil " do
 
-      Given { ENV['CIRCLE_KEY'] = nil }
-      Given { assert ENV['CIRCLE_KEY'].nil? }
+      Given { ENV['CIRCLECI_KEY'] = nil }
+      Given { assert ENV['CIRCLECI_KEY'].nil? }
 
       describe "without dkfile" do
 
-        Given { refute File.exist? '.circleci/keys/circle.key' }
+        Given { refute File.exist? '.circleci/keys/circleci.key' }
 
         describe "must raise error" do
 
           Given(:error) { HandsomeFencer::CircleCI::Crypto::DeployKeyError }
 
-          Then { assert_raises(error) { subject.obfuscate('circle') } }
+          Then { assert_raises(error) { subject.obfuscate('circleci') } }
         end
       end
 
       describe "with dkfile" do
 
-        Given { subject.generate_key('circle') }
-        Given { subject.obfuscate('circle') }
+        Given { subject.generate_key('circleci') }
+        Given { subject.obfuscate('circleci') }
 
-        Then { assert File.exist? '.circleci/circle.env.enc' }
+        Then { assert_file 'docker/env_files/circleci.env.enc' }
 
         describe "expose" do
 
-          Given { File.delete('.circleci/circle.env') }
-          Given { refute File.exist? '.circleci/circle.env' }
-          Given { subject.expose('circle') }
+          Given { File.delete('docker/env_files/circleci.env') }
+          Given { subject.expose('circleci') }
 
-          Then { assert File.exist? '.circleci/circle.env' }
+          Then { assert_file 'docker/env_files/circleci.env' }
         end
       end
     end
 
-    describe "staging" do
+    describe "development" do
 
-      Given { refute File.exist? '.circleci/containers/app/staging.env.enc' }
-      Given { subject.generate_key('staging') }
-      Given { subject.obfuscate('staging') }
+      Given { File.delete 'docker/keys/development.key'}
+      Given { refute File.exist? 'docker/keys/development.key'}
+      Given { refute File.exist? 'docker/containers/app/development.env.enc' }
+      Given { subject.generate_key('development') }
+      Given { subject.obfuscate('development') }
 
-      Then { assert File.exist? '.circleci/containers/database/staging.env.enc' }
+      Then { assert_file 'docker/containers/database/development.env.enc' }
 
       describe "expose" do
 
-        Given { File.delete '.circleci/containers/database/staging.env' }
-        Given { refute File.exist? '.circleci/containers/database/staging.env' }
-        Given { subject.expose('staging') }
+        Given { File.delete 'docker/containers/database/development.env' }
+        Given { refute File.exist? 'docker/containers/database/development.env' }
+        Given { subject.expose('development') }
 
-        Then { assert File.exist? '.circleci/containers/database/staging.env' }
+        Then { assert File.exist? 'docker/containers/database/development.env' }
       end
     end
   end

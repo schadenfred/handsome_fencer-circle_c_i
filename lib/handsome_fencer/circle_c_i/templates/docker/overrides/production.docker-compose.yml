@@ -3,7 +3,7 @@ version: '3.1'
 services:
 
   app:
-    image: rennmappe/handsomefencer_app:$DEPLOY_TAG
+    image: rennmappe/bacchanal_app:$DEPLOY_TAG
     secrets:
       - host_ssh_key
     command: [ "bundle", "exec", "puma", "-C", "config/puma.rb" ]
@@ -12,25 +12,25 @@ services:
       - database
 
     volumes:
-      - app-data:/handsomefencer
+      - app-data:/bacchanal
     environment:
       - RAILS_MASTER_KEY
     env_file:
-      - .env/development/database.env
-      - .env/development/app.env
+      - .circleci/containers/database/production.env
+      - .circleci/containers/app/production.env
     expose:
       - '3000'
 
   database:
     image: postgres
     env_file:
-      - .env/development/database.env
+      - .circleci/containers/database/production.env
 
     volumes:
       - db-data:/var/lib/postgresql/data
 
   web:
-    image: rennmappe/handsomefencer_web:$DEPLOY_TAG
+    image: rennmappe/bacchanal_web:$DEPLOY_TAG
     command: [ "nginx", "-g", "daemon off;" ]
     depends_on:
       - app
