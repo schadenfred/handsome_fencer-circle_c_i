@@ -11,6 +11,7 @@ describe "HandsomeFencer::CircleCI::CLI" do
 
     Then { assert_file '.circleci' }
     And { assert_file '.circleci/config.yml' }
+    And { assert_file '.circleci/config.yml.workflow-example' }
     And { assert_file 'docker' }
     And { assert_file 'docker/containers' }
     And { assert_file 'docker/containers/app' }
@@ -30,10 +31,10 @@ describe "HandsomeFencer::CircleCI::CLI" do
     And { assert_file 'docker/overrides' }
     And { assert_file 'docker/overrides/production.docker-compose.yml' }
 
-    And { refute File.exist? 'config/database.yml' }
-    And { refute File.exist? 'Gemfile' }
-    And { refute File.exist? 'Gemfile.lock' }
-    And { refute Fiel.exist? 'lib/tasks/deploy.rake' }
+    # And { refute File.exist? 'config/database.yml' }
+    # And { refute File.exist? 'Gemfile' }
+    # And { refute File.exist? 'Gemfile.lock' }
+    # And { refute Fiel.exist? 'lib/tasks/deploy.rake' }
   end
 
   describe "generate_key" do

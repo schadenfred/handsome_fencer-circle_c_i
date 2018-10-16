@@ -41,7 +41,7 @@ docker-compose version 1.21.0, build 5920eb0
 ...You are now ready to either a) greenfield a handsome new app or b) handsomize an existing one.
 
 
-## Greenfielding a hanfully dockerized Rails application:
+## Greenfielding a fully dockerized Rails application:
 
 1) Execute the install command:
 
