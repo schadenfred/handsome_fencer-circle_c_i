@@ -9,18 +9,10 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    byebug (10.0.2)
-    given_core (3.8.0)
-      sorcerer (>= 0.3.7)
-    minitest (5.11.3)
-    minitest-given (3.8.0)
-      given_core (= 3.8.0)
-      minitest (> 4.3)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (5.0.2)
     rake (12.3.1)
-    sorcerer (1.0.2)
     sshkit (1.17.0)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
@@ -30,9 +22,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  byebug
   handsome_fencer-circle_c_i!
-  minitest-given
+
+RUBY VERSION
+   ruby 2.5.1p57
 
 BUNDLED WITH
    1.16.3

@@ -1,0 +1,46 @@
+version: '3.1'
+
+services:
+
+  app:
+    image: rennmappe/bacchanal_app:$DEPLOY_TAG
+    secrets:
+      - host_ssh_key
+    command: [ "bundle", "exec", "puma", "-C", "config/puma.rb" ]
+
+    depends_on:
+      - database
+
+    volumes:
+      - app-data:/bacchanal
+    environment:
+      - RAILS_MASTER_KEY
+    env_file:
+      - .circleci/containers/database/production.env
+      - .circleci/containers/app/production.env
+    expose:
+      - '3000'
+
+  database:
+    image: postgres
+    env_file:
+      - .circleci/containers/database/production.env
+
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  web:
+    image: rennmappe/bacchanal_web:$DEPLOY_TAG
+    command: [ "nginx", "-g", "daemon off;" ]
+    depends_on:
+      - app
+    ports:
+      - "80:80"
+
+volumes:
+  db-data:
+  app-data:
+
+secrets:
+  host_ssh_key:
+    file: ~/.ssh/id_rsa

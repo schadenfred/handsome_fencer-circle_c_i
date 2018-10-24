@@ -5,7 +5,7 @@ services:
   app:
     build:
       context: .
-      dockerfile: docker/containers/app/Dockerfile
+      dockerfile: .circleci/containers/app/Dockerfile
 
     depends_on:
       - database
@@ -16,8 +16,8 @@ services:
       - .:/usr/src/app
       - gem_cache:/gems
     env_file:
-      - docker/containers/database/development.env
-      - docker/containers/app/development.env
+      - .circleci/containers/database/development.env
+      - .circleci/containers/app/development.env
     command: [ "bin/rails", "s" ]
 
     stdin_open: true
@@ -28,7 +28,7 @@ services:
   database:
     image: postgres
     env_file:
-      - docker/containers/database/development.env
+      - .circleci/containers/database/development.env
 
     volumes:
       - database-data:/var/lib/postgresql/data
