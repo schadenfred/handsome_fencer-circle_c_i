@@ -13,8 +13,8 @@ module HandsomeFencer
         copy_file "Gemfile.lock", "Gemfile.lock" unless File.exist? "Gemfile.lock"
         copy_file "config/database.yml", "config/database.yml"
         copy_file "gitignore", ".gitignore" unless File.exist? ".gitignore"
-        append_to_file ".gitignore", "\n.circleci/**/*.env"
-        append_to_file ".gitignore", "\n.circleci/**/*.key"
+        append_to_file ".gitignore", "docker/**/*.env"
+        append_to_file ".gitignore", "docker/**/*.key"
         append_to_file "docker/containers/database/development.env", "something"
       end
     end
