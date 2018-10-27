@@ -12,6 +12,7 @@ COPY public public/
 
 # Copy Nginx config template
 COPY .circleci/containers/web/app.conf /tmp/docker_example.nginx
+COPY docker/web/app.conf /tmp/docker_example.nginx
 
 # substitute variable references in the Nginx config template for real values from the environment
 
