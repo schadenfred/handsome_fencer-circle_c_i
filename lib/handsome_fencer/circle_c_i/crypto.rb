@@ -19,7 +19,7 @@ module HandsomeFencer
         case
         when ENV[@deploy_key].nil? && !File.exist?(@dkfile)
           raise DeployKeyError, "No #{@deploy_key} set. Please generate using '$ handsome_fencer-circle_c_i generate_key :circle' or '$ export
-            ENV['CIRCLE_KEY'] = some-complicated-key'"
+            ENV[\"##{options[:evironment]}_KEY\"] = some-complicated-key'"
         when File.exist?(@dkfile)
           Base64.decode64(File.read(@dkfile))
         when !ENV[@deploy_key].nil?
