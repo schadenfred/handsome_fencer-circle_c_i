@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    handsome_fencer-circle_c_i (0.1.29)
+    handsome_fencer-circle_c_i (0.1.30)
       rake
       sshkit
       thor
@@ -24,8 +24,5 @@ PLATFORMS
 DEPENDENCIES
   handsome_fencer-circle_c_i!
 
-RUBY VERSION
-   ruby 2.5.1p57
-
 BUNDLED WITH
-   1.16.3
+   1.17.1

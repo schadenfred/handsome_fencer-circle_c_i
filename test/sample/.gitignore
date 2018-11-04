@@ -24,6 +24,4 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
-
-.circleci/**/*.env
-.circleci/**/*.key
+docker/**/*.envdocker/**/*.key

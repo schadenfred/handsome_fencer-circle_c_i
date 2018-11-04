@@ -17,13 +17,39 @@ server = SSHKit::Host.new(hostname: hostname, port: port, user: user)
 namespace :deploy do
 
   desc 'copy to server files needed to run and manage Docker containers'
-
   task :configs do
 
     on server do
       within deploy_path do
-        upload! File.expand_path('../../config/containers/docker-compose.yml', __dir__), '.'
-        upload! File.expand_path('../../.env', __dir__), '.', recursive: true
+        upload! File.expand_path('../../docker/overrides/production.docker-compose.yml', __dir__), 'docker-compose.yml'
+        upload! File.expand_path('../../docker', __dir__), '.', recursive: true
+        execute 'apt', 'install', 'ruby'
+        execute 'gem', 'install', 'handsome_fencer-circle_c_i'
+        execute 'handsome_fencer-circle_c_i', 'expose', 'production'
+      end
+    end
+  end
+
+  desc 'copy production key to server'
+  task :production_key do
+
+    on server do
+      within deploy_path do
+
+        upload! '.circleci/keys/production.key', '.circleci/keys/production.key'
+      end
+    end
+  end
+
+  desc 'expose production environment'
+  task :expose_production_environment do
+
+    on server do
+      within deploy_path do
+
+        execute 'apt', 'install', 'ruby'
+        execute 'gem', 'install', 'handsome_fencer-circle_c_i'
+        execute 'handsome_fencer-circle_c_i', 'expose', 'production'
       end
     end
   end
