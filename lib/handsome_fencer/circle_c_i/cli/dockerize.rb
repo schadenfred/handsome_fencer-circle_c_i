@@ -13,8 +13,8 @@ module HandsomeFencer
         copy_file "Gemfile.lock", "Gemfile.lock" unless File.exist? "Gemfile.lock"
         copy_file "config/database.yml", "config/database.yml"
         copy_file "gitignore", ".gitignore" unless File.exist? ".gitignore"
-        append_to_file ".gitignore", "docker/**/*.env"
-        append_to_file ".gitignore", "docker/**/*.key"
+        append_to_file ".gitignore", "\ndocker/**/*.env"
+        append_to_file ".gitignore", "\ndocker/**/*.key"
 
         app_name = ask("Name of your app:")
         append_to_file 'docker/env_files/circleci.env', "\nexport APP_NAME=#{app_name}"
@@ -32,7 +32,7 @@ module HandsomeFencer
           append_to_file 'docker/env_files/circleci.env', "\nexport #{env_var}=#{variable_value}"
         end
         account_type = ask("Are your images associated with your user name or an organization?", :limited_to => %w[organization user])
-        if account_type = "organization"
+        if account_type == "organization"
           org_name = ask("Organization name:")
           append_to_file 'docker/env_files/circleci.env', "\nexport DOCKERHUB_ORG_NAME=#{org_name}"
         else
