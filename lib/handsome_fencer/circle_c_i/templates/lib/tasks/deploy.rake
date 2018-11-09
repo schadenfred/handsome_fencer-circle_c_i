@@ -8,9 +8,10 @@ hostname =        ENV['SERVER_HOST']
 user =            ENV['SERVER_USER']
 dockerhub_user =  ENV['DOCKERHUB_USER']
 dockerhub_pass =  ENV['DOCKERHUB_PASS']
+dockerhub_org =   ENV['DOCKERHUB_ORG']
 port =            ENV['SERVER_PORT']
 deploy_env =      ENV['DEPLOY_ENV'] || :production
-deploy_path =     ENV['DEPLOY_PATH']
+deploy_path =     ENV['APP_NAME']
 
 server = SSHKit::Host.new(hostname: hostname, port: port, user: user)
 
@@ -101,7 +102,7 @@ namespace :docker do
     on server do
       within deploy_path do
         ["#{deploy_path}_app", "#{deploy_path}_web"].each do |image_name|
-          execute 'docker', 'pull', "rennmappe/#{image_name}:#{deploy_tag}"
+          execute 'docker', 'pull', "#{dockerhub_org}/#{image_name}:#{deploy_tag}"
         end
         execute 'docker', 'pull', 'postgres:9.4.5'
       end
