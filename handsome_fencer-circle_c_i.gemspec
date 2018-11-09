@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
   s.add_dependency "sshkit"
-  s.add_dependency "thor"
+  s.add_dependency "thor", "0.20.0"
   s.add_dependency "rake"
 
   s.add_development_dependency "minitest"
