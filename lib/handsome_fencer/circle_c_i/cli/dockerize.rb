@@ -21,7 +21,6 @@ module HandsomeFencer
 
         append_to_file 'docker/containers/database/development.env', "\nPOSTGRES_DB=#{app_name}_development"
         append_to_file 'docker/containers/database/production.env', "\nPOSTGRES_DB=#{app_name}_production"
-
         {
           "SERVER_HOST" => "ip address of your server",
           "DOCKERHUB_EMAIL" => "You will need an account with Docker, which can be created at hub.docker.com. Once you have your account, please provide the email associated with it here:",
@@ -37,6 +36,12 @@ module HandsomeFencer
           append_to_file 'docker/env_files/circleci.env', "\nexport DOCKERHUB_ORG_NAME=#{org_name}"
         else
           append_to_file 'docker/env_files/circleci.env', "\nexport DOCKERHUB_ORG_NAME=${DOCKERHUB_USER}"
+        end
+        {
+          "APP_NAME" => "Name of your app:"
+        }.each do |env_var, prompt|
+          app_name = ask(prompt)
+          template "docker/overrides/docker-compose.production.yml.tt", "docker/overrides/docker-copose.produciton.yml"
         end
       end
     end
