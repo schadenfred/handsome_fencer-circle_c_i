@@ -3,7 +3,7 @@ module HandsomeFencer
   module CircleCI
     class CLI < Thor
 
-      desc "obfuscate", "obfuscate .env files inside .circleci directory"
+      desc "obfuscate", "obfuscate .env files inside"
 
       def obfuscate(*args)
 
