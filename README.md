@@ -1,6 +1,6 @@
 # HandsomeFencer::CircleCI
 
-This gem provides developers a handsome way of deploying applications using Docker, CircleCI, and the server of their choice. It's written in Ruby, uses Thor, and borrows liberally from the Rails philosophy of convention over configuration.
+This gem provides developers a handsome way of deploying applications using Docker, CircleCI, and the server of their choice. It's written in Ruby, uses Thor, and admires the Rails philosophy of convention over configuration.
 
 ## Usage
 
@@ -46,7 +46,7 @@ docker-compose version 1.21.0, build 5920eb0
 1) Execute the install command:
 
 ```bash
-$ handsome_fencer-circle_c_i install
+$ handsome_fencer-circle_c_i dockerize
 ```
 
 2) Ask Docker to use Rails to generate our dockerized Rails app:
@@ -55,7 +55,7 @@ $ handsome_fencer-circle_c_i install
 $ docker-compose run app rails new .
 ```
 
-If you're on a linux machine, you may need to chown the newly created files using:
+If you're on a linux machine, you may need to chown the newly created files:
 
 ```bash
 $ sudo chown <username><user group> -R .
