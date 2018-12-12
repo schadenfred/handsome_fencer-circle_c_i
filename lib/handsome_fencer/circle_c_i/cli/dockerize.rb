@@ -22,16 +22,16 @@ module HandsomeFencer
         append_to_file 'docker/containers/database/development.env', "\nPOSTGRES_DB=#{app_name}_development"
         append_to_file 'docker/containers/database/production.env', "\nPOSTGRES_DB=#{app_name}_production"
         {
-          "SERVER_HOST" => "ip address of your server",
-          "DOCKERHUB_EMAIL" => "You will need an account with Docker, which can be created at hub.docker.com. Once you have your account, please provide the email associated with it here:",
+          "SERVER_HOST" => "ip address of your server:",
+          "DOCKERHUB_EMAIL" => "You'll need an account with Docker hub.docker.com. Please provide your Docker email:",
           "DOCKERHUB_USER" => "Please provide your Docker username here:",
           "DOCKERHUB_PASS" => "Please provide your Docker password here:"
         }.each do |env_var, prompt|
           variable_value = ask(prompt)
           append_to_file 'docker/env_files/circleci.env', "\nexport #{env_var}=#{variable_value}"
         end
-        account_type = ask("Are your images associated with your user name or an organization?", :limited_to => %w[organization user])
-        if account_type == "organization"
+        account_type = ask("Will you like to push your images to Docker under user account or organization instead?", :limited_to => %w[o, u])
+        if account_type == "o"
           org_name = ask("Organization name:")
           append_to_file 'docker/env_files/circleci.env', "\nexport DOCKERHUB_ORG_NAME=#{org_name}"
         else
