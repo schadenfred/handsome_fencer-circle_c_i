@@ -1,52 +1,76 @@
+require 'byebug'
+
 module HandsomeFencer
   module CircleCI
+
     class CLI < Thor
 
       desc "dockerize", "This will generate files necessary to dockerize your project, along with a set of files for continuous deployment using CircleCI"
 
       def dockerize
+
         directory "circleci", "./.circleci", recursive: true
         directory "docker", "docker", recursive: true
         directory "lib", "lib", recursive: true
         copy_file "docker-compose.yml", "docker-compose.yml"
-        copy_file "Gemfile", "Gemfile" unless File.exist? "Gemfile"
-        copy_file "Gemfile.lock", "Gemfile.lock" unless File.exist? "Gemfile.lock"
+        copy_file "Gemfile", "Gemfile"
+        copy_file "Gemfile.lock", "Gemfile.lock"
         copy_file "config/database.yml", "config/database.yml"
-        copy_file "gitignore", ".gitignore" unless File.exist? ".gitignore"
+        copy_file "gitignore", ".gitignore"
         append_to_file ".gitignore", "\ndocker/**/*.env"
         append_to_file ".gitignore", "\ndocker/**/*.key"
-        variables = {}
+
         prompts = {
-          "APP_NAME" => "the name your app",
+          "APP_NAME" => "the name of your app",
           "SERVER_HOST" => "the ip address of your server",
           "DOCKERHUB_EMAIL" => "your Docker Hub email",
           "DOCKERHUB_USER" => "your Docker Hub username",
-          "DOCKERHUB_PASS" => "your Docker Hub password",
-          "DOCKERHUB_ORG_NAME" => "your Docker Hub organization name"
-        }.each do |key, prompt|
-          variables[key] = ask("Please provide #{prompt}:")
+          "POSTGRES_USER" => "your Postgres username",
+          "POSTGRES_PASSWORD" => "your Postgres password",
+          "DOCKERHUB_PASS" => "your Docker Hub password"
+        }
+
+        prompts.map do |key, prompt|
+          prompts[key] = ask("Please provide #{prompt}:")
         end
-          # append_to_file 'docker/env_files/circleci.env', "\nexport #{key}=#{value}"
-        append_to_file 'docker/env_files/circleci.env', "\nexport #{key}=#{value}"
 
-
-        app_name = ask("Name of your app:")
-        append_to_file 'docker/env_files/circleci.env', "\nexport APP_NAME=#{app_name}"
-
-        append_to_file 'docker/containers/database/development.env', "\nPOSTGRES_DB=#{app_name}_development"
-        append_to_file 'docker/containers/database/production.env', "\nPOSTGRES_DB=#{app_name}_production"
-        account_type = ask("Will you be pushing your images associated with your user name or an organization?", :limited_to => %w[organization user])
-        if account_type == "organization"
-          org_name = ask("Organization name:")
-          append_to_file 'docker/env_files/circleci.env', "\nexport DOCKERHUB_ORG_NAME=#{org_name}"
+        account_type = ask("Will you be pushing images to Docker Hub under your user name or under your organization name instead?", :limited_to => %w[org user])
+        if account_type == "org"
+          prompts['DOCKERHUB_ORG_NAME']= ask("Organization name:")
         else
-          append_to_file 'docker/env_files/circleci.env', "\nexport DOCKERHUB_ORG_NAME=${DOCKERHUB_USER}"
+          prompts['DOCKERHUB_ORG_NAME']= "${DOCKERHUB_USER}"
         end
-        {
-          "APP_NAME" => "Name of your app:"
-        }.each do |env_var, prompt|
-          app_name = ask(prompt)
-          template "docker/overrides/docker-compose.production.yml.tt", "docker/overrides/docker-copose.produciton.yml"
+
+        prompts.map do |key, value|
+          append_to_file 'docker/env_files/circleci.env', "\nexport #{key}=#{value}"
+        end
+
+        %w[development circleci staging production].each do |environment|
+          base = "docker/containers/"
+
+          app_env = create_file "#{base}app/#{environment}.env"
+          append_to_file app_env, "DATABASE_HOST=database\n"
+          append_to_file app_env, "RAILS_ENV=#{environment}\n"
+
+          database_env = create_file "#{base}database/#{environment}.env"
+          append_to_file database_env, "POSTGRES_USER=postgres\n"
+          append_to_file database_env, "POSTGRES_DB=#{prompts['APP_NAME']}_#{environment}\n"
+          append_to_file database_env, "POSTGRES_PASSWORD=#{prompts['POSTGRES_PASSWORD']}\n"
+
+          ssl = (environment == "production") ? true : false
+          web_env = create_file "#{base}web/#{environment}.env"
+          append_to_file web_env, "CA_SSL=postgres#{ssl}\n"
+        end
+        %w[circleci production].each do |environment|
+          template "docker/overrides/#{environment}.yml.tt", "docker/overrides/#{environment}.yml"
+        end
+
+        %w[app web].each do |container|
+          options = {
+            email: prompts['DOCKERHUB_EMAIL'],
+            app_name: prompts['APP_NAME']
+          }
+          template "docker/containers/#{container}/Dockerfile.tt", "docker/containers/#{container}/Dockerfile", options
         end
       end
     end
