@@ -15,23 +15,28 @@ module HandsomeFencer
         copy_file "gitignore", ".gitignore" unless File.exist? ".gitignore"
         append_to_file ".gitignore", "\ndocker/**/*.env"
         append_to_file ".gitignore", "\ndocker/**/*.key"
+        variables = {}
+        prompts = {
+          "APP_NAME" => "the name your app",
+          "SERVER_HOST" => "the ip address of your server",
+          "DOCKERHUB_EMAIL" => "your Docker Hub email",
+          "DOCKERHUB_USER" => "your Docker Hub username",
+          "DOCKERHUB_PASS" => "your Docker Hub password",
+          "DOCKERHUB_ORG_NAME" => "your Docker Hub organization name"
+        }.each do |key, prompt|
+          variables[key] = ask("Please provide #{prompt}:")
+        end
+          # append_to_file 'docker/env_files/circleci.env', "\nexport #{key}=#{value}"
+        append_to_file 'docker/env_files/circleci.env', "\nexport #{key}=#{value}"
+
 
         app_name = ask("Name of your app:")
         append_to_file 'docker/env_files/circleci.env', "\nexport APP_NAME=#{app_name}"
 
         append_to_file 'docker/containers/database/development.env', "\nPOSTGRES_DB=#{app_name}_development"
         append_to_file 'docker/containers/database/production.env', "\nPOSTGRES_DB=#{app_name}_production"
-        {
-          "SERVER_HOST" => "ip address of your server:",
-          "DOCKERHUB_EMAIL" => "You'll need an account with Docker hub.docker.com. Please provide your Docker email:",
-          "DOCKERHUB_USER" => "Please provide your Docker username here:",
-          "DOCKERHUB_PASS" => "Please provide your Docker password here:"
-        }.each do |env_var, prompt|
-          variable_value = ask(prompt)
-          append_to_file 'docker/env_files/circleci.env', "\nexport #{env_var}=#{variable_value}"
-        end
-        account_type = ask("Will you like to push your images to Docker under user account or organization instead?", :limited_to => %w[o, u])
-        if account_type == "o"
+        account_type = ask("Will you be pushing your images associated with your user name or an organization?", :limited_to => %w[organization user])
+        if account_type == "organization"
           org_name = ask("Organization name:")
           append_to_file 'docker/env_files/circleci.env', "\nexport DOCKERHUB_ORG_NAME=#{org_name}"
         else

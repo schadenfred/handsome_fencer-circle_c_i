@@ -1,0 +1,44 @@
+version: '3.1'
+
+services:
+
+  app:
+    image: rennmappe/recallapi_app:$DEPLOY_TAG
+    secrets:
+      - host_ssh_key
+    command: [ "bundle", "exec", "puma", "-C", "config/puma.rb" ]
+
+    depends_on:
+      - database
+
+    volumes:
+      - app-data:/recallapi
+    env_file:
+      - docker/containers/app/production.env
+      - docker/containers/database/production.env
+    expose:
+      - '3000'
+
+  database:
+    image: postgres
+    env_file:
+      - docker/containers/database/production.env
+
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  web:
+    image: rennmappe/recallapi_web:$DEPLOY_TAG
+    command: [ "nginx", "-g", "daemon off;" ]
+    depends_on:
+      - app
+    ports:
+      - "80:80"
+
+volumes:
+  db-data:
+  app-data:
+
+secrets:
+  host_ssh_key:
+    file: ~/.ssh/id_rsa
