@@ -1,5 +1,5 @@
 module HandsomeFencer
   module CircleCI
-    VERSION = '0.1.39'
+    VERSION = '0.1.40'
   end
 end
