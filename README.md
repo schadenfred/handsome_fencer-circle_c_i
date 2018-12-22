@@ -76,7 +76,7 @@ If that doesn't work, Docker's [documentation](https://docs.docker.com/install/l
 4) Ask Docker to build the necessary images for our app and spool up containers using them:
 
 ```bash
-$ docker-compose build
+$ docker-compose up --build
  ```
 
 4) Now we need to ask Docker to execute a command on the container we asked Docker to run in the previous step. Issue the following command in a new terminal:
