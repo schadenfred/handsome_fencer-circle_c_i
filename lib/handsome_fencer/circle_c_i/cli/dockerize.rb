@@ -51,7 +51,7 @@ module HandsomeFencer
           prompts['DOCKERHUB_ORG_NAME']= "${DOCKERHUB_USER}"
         when nil
           prompts['DOCKERHUB_ORG_NAME']= "${DOCKERHUB_USER}"
-
+        end
         prompts.map do |key, value|
           append_to_file 'docker/env_files/circleci.env', "\nexport #{key}=#{value}"
         end
