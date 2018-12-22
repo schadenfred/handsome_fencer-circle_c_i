@@ -46,8 +46,8 @@ docker-compose version 1.21.0, build 5920eb0
 1) Create a directory named after your new, greenfield app and change into that directory:
 
 ```bash
-$ mkdir -p sooperdooperapp
-$ cd sooperdooperapp
+$ mkdir -p sooperdooper
+$ cd sooperdooper
 
 ```
 
@@ -62,7 +62,7 @@ You will be prompted to over-write a number of files. Please do so.
 3) Ask Docker to use Rails to generate our dockerized Rails app in our current directory. Do NOT write over the :
 
 ```bash
-$ docker-compose run app rails new . --skip
+$ docker-compose run app rails new . --database=postgresql --skip
 ```
 
 3a) If you're on a linux machine, you may need to chown the newly created files:
@@ -79,7 +79,7 @@ If that doesn't work, Docker's [documentation](https://docs.docker.com/install/l
 $ docker-compose build
  ```
 
-4) Now we need to ask Docker to execute a command on the container started in the previous step. Issue the following command in a new terminal:
+4) Now we need to ask Docker to execute a command on the container we asked Docker to run in the previous step. Issue the following command in a new terminal:
 
  ```bash
  $ docker-compose run app bin/rails db:create db:migrate
