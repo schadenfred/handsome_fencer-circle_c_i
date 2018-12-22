@@ -57,9 +57,9 @@ $ cd sooperdooper
 $ handsome_fencer-circle_c_i dockerize
 ```
 
-You will be prompted to over-write a number of files. Please do so.
+You will be prompted with a number of questions. For demonstration purposes and to accept the defaults, hit enter at each prompt without answering, and again hit enter when asked if you'd like to over-write files.
 
-3) Ask Docker to use Rails to generate our dockerized Rails app in our current directory. Do NOT write over the :
+3) Ask Docker to 'run' the 'rails new' command inside our 'app' container to generate a rails app in '.' (our current directory), with a flag specifying our 'database' as 'postgresql' and another flag so it will 'skip' over-writing our previously generated files:
 
 ```bash
 $ docker-compose run app rails new . --database=postgresql --skip
@@ -92,7 +92,7 @@ You should now be able to see the Rails welcome screen upon clicking [http://loc
 1) Execute the install command:
 
 ```bash
-$ handsome_fencer-circle_c_i install
+$ handsome_fencer-circle_c_i dockerize
 ```
 
 2) You'll be asked which files to write over. Keep your Gemfile and let it write over everything else, including your .gitignore, any existing docker-compose.yml, .circleci/config.yml, and Gemfile.lock files.
