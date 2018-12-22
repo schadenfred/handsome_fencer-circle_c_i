@@ -43,27 +43,35 @@ docker-compose version 1.21.0, build 5920eb0
 
 ## Greenfielding a fully dockerized Rails application:
 
-1) Execute the install command:
+1) Create a directory named after your new, greenfield app and change into that directory:
+
+```bash
+$ mkdir -p sooperdooperapp
+$ cd sooperdooperapp
+
+```
+
+2) Execute the dockerize command:
 
 ```bash
 $ handsome_fencer-circle_c_i dockerize
 ```
 
-2) Ask Docker to use Rails to generate our dockerized Rails app:
+3) Ask Docker to use Rails to generate our dockerized Rails app in our current directory:
 
 ```bash
 $ docker-compose run app rails new .
 ```
 
-If you're on a linux machine, you may need to chown the newly created files:
+3a) If you're on a linux machine, you may need to chown the newly created files:
 
 ```bash
 $ sudo chown <username><user group> -R .
 ```
 
-If that doesn't work, Docker's [documentation](https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user) should get you pointed in the right direction.
+3b) If that doesn't work, Docker's [documentation](https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user) should get you pointed in the right direction.
 
-3) Ask Docker to build the necessary images for our app and spool up containers using them:
+4) Ask Docker to build the necessary images for our app and spool up containers using them:
 
 ```bash
 $ docker-compose up --build

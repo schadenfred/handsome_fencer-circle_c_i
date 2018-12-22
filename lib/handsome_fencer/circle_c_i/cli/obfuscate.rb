@@ -7,7 +7,7 @@ module HandsomeFencer
 
       def obfuscate(*args)
 
-        default_environments = %w[circleci development production]
+        default_environments = %w[circleci development staging production]
         environments = args.first ? args.first : default_environments
         environments.each do |environment|
           @cipher = HandsomeFencer::CircleCI::Crypto.new(environment: environment)
