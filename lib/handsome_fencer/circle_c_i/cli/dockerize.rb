@@ -20,6 +20,15 @@ module HandsomeFencer
         append_to_file ".gitignore", "\ndocker/**/*.env"
         append_to_file ".gitignore", "\ndocker/**/*.key"
 
+        default_values = {
+          "APP_NAME" => "greenfield",
+          "SERVER_HOST" => "ip-address-of-your-server",
+          "DOCKERHUB_EMAIL" => "your-docker-hub-emaill",
+          "DOCKERHUB_USER" => "your-docker-hub-user-name",
+          "POSTGRES_USER" => "your-postgres-username",
+          "POSTGRES_PASSWORD" => "your-postgres-password",
+          "DOCKERHUB_PASS" => "your-docker-hub-password"
+        }
         prompts = {
           "APP_NAME" => "the name of your app",
           "SERVER_HOST" => "the ip address of your server",
@@ -31,15 +40,17 @@ module HandsomeFencer
         }
 
         prompts.map do |key, prompt|
-          prompts[key] = ask("Please provide #{prompt}:")
+          prompts[key] = ask("Please provide #{prompt}:") || default_values[key]
         end
 
         account_type = ask("Will you be pushing images to Docker Hub under your user name or under your organization name instead?", :limited_to => %w[org user])
-        if account_type == "org"
+        case account_type
+        when "org"
           prompts['DOCKERHUB_ORG_NAME']= ask("Organization name:")
-        else
+        when "user"
           prompts['DOCKERHUB_ORG_NAME']= "${DOCKERHUB_USER}"
-        end
+        when nil
+          prompts['DOCKERHUB_ORG_NAME']= "${DOCKERHUB_USER}"
 
         prompts.map do |key, value|
           append_to_file 'docker/env_files/circleci.env', "\nexport #{key}=#{value}"

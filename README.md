@@ -57,10 +57,12 @@ $ cd sooperdooperapp
 $ handsome_fencer-circle_c_i dockerize
 ```
 
-3) Ask Docker to use Rails to generate our dockerized Rails app in our current directory:
+You will be prompted to over-write a number of files. Please do so.
+
+3) Ask Docker to use Rails to generate our dockerized Rails app in our current directory. Do NOT write over the :
 
 ```bash
-$ docker-compose run app rails new .
+$ docker-compose run app rails new . --skip
 ```
 
 3a) If you're on a linux machine, you may need to chown the newly created files:
@@ -69,18 +71,18 @@ $ docker-compose run app rails new .
 $ sudo chown <username><user group> -R .
 ```
 
-3b) If that doesn't work, Docker's [documentation](https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user) should get you pointed in the right direction.
+If that doesn't work, Docker's [documentation](https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user) should get you pointed in the right direction.
 
 4) Ask Docker to build the necessary images for our app and spool up containers using them:
 
 ```bash
-$ docker-compose up --build
+$ docker-compose build
  ```
 
-4) Ask Docker to set up our database bye executing the following commands within the container for our Rails app:
+4) Now we need to ask Docker to execute a command on the container started in the previous step. Issue the following command in a new terminal:
 
  ```bash
- $ docker-compose exec app bin/rails db:create db:migrate
+ $ docker-compose run app bin/rails db:create db:migrate
   ```
 
 You should now be able to see the Rails welcome screen upon clicking [http://localhost:3000/](http://localhost:3000/).
