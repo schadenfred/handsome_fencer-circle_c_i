@@ -1,4 +1,0 @@
-require 'sshkit'
-import 'lib/tasks/deploy.rake'
-
-task :default => 'docker:deploy'

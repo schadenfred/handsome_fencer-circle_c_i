@@ -25,33 +25,40 @@ module HandsomeFencer
           "SERVER_HOST" => "ip-address-of-your-server",
           "DOCKERHUB_EMAIL" => "your-docker-hub-emaill",
           "DOCKERHUB_USER" => "your-docker-hub-user-name",
+          "DOCKERHUB_ORG" => "your-docker-hub-org-name",
+          "DOCKERHUB_PASS" => "your-docker-hub-password",
           "POSTGRES_USER" => "your-postgres-username",
-          "POSTGRES_PASSWORD" => "your-postgres-password",
-          "DOCKERHUB_PASS" => "your-docker-hub-password"
+          "POSTGRES_PASSWORD" => "your-postgres-password"
         }
+
         prompts = {
           "APP_NAME" => "the name of your app",
           "SERVER_HOST" => "the ip address of your server",
           "DOCKERHUB_EMAIL" => "your Docker Hub email",
           "DOCKERHUB_USER" => "your Docker Hub username",
+          "DOCKERHUB_ORG" => "your Docker Hub organization name",
+          "DOCKERHUB_PASS" => "your Docker Hub password",
           "POSTGRES_USER" => "your Postgres username",
-          "POSTGRES_PASSWORD" => "your Postgres password",
-          "DOCKERHUB_PASS" => "your Docker Hub password"
+          "POSTGRES_PASSWORD" => "your Postgres password"
         }
 
         prompts.map do |key, prompt|
-          prompts[key] = ask("Please provide #{prompt}:") || default_values[key]
+          prompts[key] = ask("Please provide #{prompt}:")
+          if prompts[key].size == 0
+            prompts[key] = default_values[key]
+          end
         end
 
-        account_type = ask("Will you be pushing images to Docker Hub under your user name or under your organization name instead?", :limited_to => %w[org user])
-        case account_type
-        when "org"
-          prompts['DOCKERHUB_ORG_NAME']= ask("Organization name:")
-        when "user"
-          prompts['DOCKERHUB_ORG_NAME']= "${DOCKERHUB_USER}"
-        when nil
-          prompts['DOCKERHUB_ORG_NAME']= "${DOCKERHUB_USER}"
-        end
+        # account_type = ask("Will you be pushing images to Docker Hub under your user name or under your organization name instead?", :limited_to => ["org", "user", "skip"])
+        # case account_type
+        #
+        # when "o"
+        #   prompts['DOCKERHUB_ORG_NAME']= ask("Organization name:")
+        # when "u"
+        #   prompts['DOCKERHUB_ORG_NAME']= "${DOCKERHUB_USER}"
+        # when "s"
+        #   prompts['DOCKERHUB_ORG_NAME']= "${DOCKERHUB_USER}"
+        # end
         prompts.map do |key, value|
           append_to_file 'docker/env_files/circleci.env', "\nexport #{key}=#{value}"
         end
